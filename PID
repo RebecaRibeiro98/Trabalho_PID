@@ -49,20 +49,20 @@ def timerCallBack(event):
     if state == 'initial':
         setpoint1 = 2.683991025         #,1.887759912) talvez seta um pouco pra tras de jeito
         position = odom.pose.pose.position
-        dist = setpoint1[0] - position.x #math.sqrt((setpoint[0] - position.x)**2 + (setpoint[1] - position.y) **2)
+        dist = setpoint1 - position.x #math.sqrt((setpoint[0] - position.x)**2 + (setpoint[1] - position.y) **2)
         error1 = dist
         
         P1 = kp1*error1
         I1 = ki1*error1
         D1 = kd1*error1
         control1 = P1+I1+D1
-        msg.linear.x = control
+        msg.linear.x = control1
         
         state = 'state1'
     
     if state == 'state1':
         yaw = getAngle(odom)
-        setpoint1 = 90
+        setpoint2 = 90
         error2 = (setpoint2 - yaw)
     
         if abs(error2) > 180:
@@ -78,7 +78,7 @@ def timerCallBack(event):
         
         state = 'state2'
             
-    if state = 'state3':
+    if state == 'state3':
         setpoint3 = 0.5
     
         scan_len = len(scan.ranges)
